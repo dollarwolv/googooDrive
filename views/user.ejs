@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= user.username %>’s Folders</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background-color: #f6f8fa;
+        margin: 0;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        color: #555;
+        margin: 0;
+      }
+
+      .folders {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+        width: 100%;
+        max-width: 960px;
+      }
+
+      .folder-card {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        transition: transform 0.1s ease, box-shadow 0.1s ease;
+      }
+
+      .folder-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .folder-card a {
+        text-decoration: none;
+        color: #0366d6;
+        font-weight: 500;
+        font-size: 1.1rem;
+      }
+
+      .folder-card a:hover {
+        text-decoration: underline;
+      }
+
+      .empty {
+        text-align: center;
+        color: #777;
+        margin-top: 2rem;
+      }
+
+      .actions {
+        margin-top: 2rem;
+      }
+
+      a.button {
+        display: inline-block;
+        background: #0366d6;
+        color: #fff;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
+        text-decoration: none;
+      }
+
+      a.button:hover {
+        background: #024c9b;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Welcome, <%= user.username %>!</h1>
+      <p>Your folders</p>
+    </header>
+
+    <% if (folders && folders.length > 0) { %>
+    <section class="folders">
+      <% folders.forEach(folder => { %>
+      <div class="folder-card">
+        <a href="/folders/<%= folder.id %>"><%= folder.name %></a>
+      </div>
+      <% }) %>
+    </section>
+    <% } else { %>
+    <div class="empty">
+      <p>You don’t have any folders yet.</p>
+    </div>
+    <% } %>
+
+    <div class="actions">
+      <a class="button" href="/folders/new">Create new folder</a>
+      <a class="button" href="/log-out" style="background: #6c757d">Log out</a>
+    </div>
+  </body>
+</html>

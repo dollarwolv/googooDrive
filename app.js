@@ -11,6 +11,7 @@ const prisma = require("./db/prisma");
 const loginRouter = require("./routes/log-in");
 const signupRouter = require("./routes/sign-up");
 const logoutRouter = require("./routes/log-out");
+const userRouter = require("./routes/user");
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.get("/", (req, res) => {
 app.use("/log-in", loginRouter);
 app.use("/sign-up", signupRouter);
 app.use("/log-out", logoutRouter);
+app.use("/users", userRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
