@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>File Uploader</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      .card {
+        text-align: center;
+        max-width: 480px;
+        width: 100%;
+      }
+      h1 {
+        margin-bottom: 1rem;
+      }
+      .actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        margin-top: 1.25rem;
+      }
+      a.button {
+        display: inline-block;
+        padding: 0.6rem 1rem;
+        background: #0366d6;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+      a.button.secondary {
+        background: #6c757d;
+      }
+      a.button:focus {
+        outline: 3px solid rgba(3, 102, 214, 0.25);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <% if (currentUser) { %>
+      <h1>Welcome back, <%= currentUser.username %>!</h1>
+      <p>Ready to upload some files?</p>
+      <div class="actions">
+        <a class="button" href="/upload">Upload file</a>
+        <a class="button secondary" href="/log-out">Log out</a>
+      </div>
+      <% } else { %>
+      <h1>Welcome to the file uploader</h1>
+      <p>Upload and manage your files quickly and securely (or maybe not).</p>
+      <div class="actions">
+        <a class="button" href="/log-in">Log in</a>
+        <a class="button secondary" href="/sign-up">Sign up</a>
+      </div>
+      <% } %>
+    </main>
+  </body>
+</html>
