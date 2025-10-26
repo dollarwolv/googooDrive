@@ -3,6 +3,8 @@ const userRouter = Router();
 const prisma = require("../db/prisma");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+const supabase = require("../db/supabase");
+const fs = require("fs");
 
 userRouter.get("/:id/folders", async (req, res) => {
   const id = parseInt(req.params.id);
@@ -92,6 +94,30 @@ userRouter.post(
     const folderId = parseInt(req.params.folderId);
     const userId = parseInt(req.params.userId);
     const { originalname, mimetype, filename, path, size } = req.file;
+
+    const fileBuffer = fs.readFileSync(path);
+
+    // upload to supabase
+    const { data, error } = await supabase.storage
+      .from("files")
+      .upload(`user_${userId}/${originalname}`, fileBuffer, {
+        contentType: mimetype,
+        upsert: true,
+      });
+
+    if (error) {
+      console.error(error);
+      return res.status(500).send("Failed to upload file.");
+    }
+
+    // get file url
+    const { data: publicUrlData } = supabase.storage
+      .from("files")
+      .getPublicUrl(`user_${userId}/${originalname}`);
+
+    const { publicUrl } = publicUrlData;
+
+    // save file data
     const file = await prisma.file.create({
       data: {
         originalName: originalname,
@@ -100,9 +126,14 @@ userRouter.post(
         path: path,
         sizeBytes: size,
         folderId,
+        url: publicUrl,
       },
     });
-    res.redirect(`users/${userId}/folders/${folderId}/`);
+
+    // delete the file
+    fs.unlinkSync(path);
+
+    res.redirect(`/users/${userId}/folders/${folderId}/`);
   }
 );
 module.exports = userRouter;

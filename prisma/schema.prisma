@@ -40,6 +40,7 @@ model File {
   path         String
   mimeType     String?
   sizeBytes    Int?
+  url          String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

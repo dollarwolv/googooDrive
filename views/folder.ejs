@@ -131,9 +131,7 @@
             <td>
               <% if (file.id) { %>
               <div class="actions">
-                <a class="download-button" href="/files/<%= file.id %>/download"
-                  >Download</a
-                >
+                <a class="download-button" href="<%= file.url%>">Download</a>
               </div>
               <% } %>
             </td>
