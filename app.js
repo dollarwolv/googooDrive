@@ -12,6 +12,7 @@ const loginRouter = require("./routes/log-in");
 const signupRouter = require("./routes/sign-up");
 const logoutRouter = require("./routes/log-out");
 const userRouter = require("./routes/user");
+const fileRouter = require("./routes/files");
 
 const app = express();
 
@@ -56,6 +57,7 @@ app.use("/log-in", loginRouter);
 app.use("/sign-up", signupRouter);
 app.use("/log-out", logoutRouter);
 app.use("/users", userRouter);
+app.use("/files", fileRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {

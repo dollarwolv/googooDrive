@@ -49,7 +49,9 @@
       <h1>Welcome back, <%= currentUser.username %>!</h1>
       <p>Ready to upload some files?</p>
       <div class="actions">
-        <a class="button" href="/upload">Upload file</a>
+        <a class="button" href="/users/<%= currentUser.id %>/folders"
+          >View folders</a
+        >
         <a class="button secondary" href="/log-out">Log out</a>
       </div>
       <% } else { %>

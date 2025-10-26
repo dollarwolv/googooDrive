@@ -96,7 +96,9 @@
     <section class="folders">
       <% folders.forEach(folder => { %>
       <div class="folder-card">
-        <a href="/folders/<%= folder.id %>"><%= folder.name %></a>
+        <a href="/users/<%= user.id %>/folders/<%= folder.id %>"
+          ><%= folder.name %></a
+        >
       </div>
       <% }) %>
     </section>

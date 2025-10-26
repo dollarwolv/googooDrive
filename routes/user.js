@@ -76,7 +76,7 @@ userRouter.get("/:userId/folders/:folderId/", async (req, res) => {
       folderId,
     },
   });
-  res.render("folder", { folder, files });
+  res.render("folder", { folder, files, userId, folderId });
 });
 
 userRouter.get("/:userId/folders/:folderId/files/new", (req, res) => {

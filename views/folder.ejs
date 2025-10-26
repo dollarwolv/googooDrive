@@ -89,7 +89,16 @@
   <body>
     <header>
       <h1><%= (folder && folder.name) ? folder.name : 'Files' %></h1>
-      <div><a class="button" href="..">Back</a></div>
+      <div style="display: flex; flex-direction: row; gap: 8px">
+        <div>
+          <a
+            class="button"
+            href="/users/<%= userId %>/folders/<%= folderId %>/files/new"
+            >Upload a file</a
+          >
+        </div>
+        <div><a class="button" href=".">Back</a></div>
+      </div>
     </header>
 
     <div class="card">
