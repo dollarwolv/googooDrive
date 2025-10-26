@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      <%= (folder && folder.name) ? folder.name + ' – Files' : 'Files' %>
+    </title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background-color: #f6f8fa;
+        margin: 0;
+        padding: 2rem;
+      }
+      header {
+        max-width: 1100px;
+        margin: 0 auto 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.5rem;
+      }
+      a.button {
+        display: inline-block;
+        background: #0366d6;
+        color: #fff;
+        padding: 0.5rem 0.9rem;
+        border-radius: 6px;
+        text-decoration: none;
+      }
+      .card {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        max-width: 1100px;
+        margin: 0 auto;
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead th {
+        text-align: left;
+        font-weight: 600;
+        color: #444;
+        background: #f0f3f6;
+      }
+      th,
+      td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #eee;
+        white-space: nowrap;
+      }
+      tbody tr:hover {
+        background: #fafbfc;
+      }
+      .muted {
+        color: #666;
+      }
+      .empty {
+        padding: 2rem;
+        text-align: center;
+        color: #777;
+      }
+      .download-button {
+        display: inline-block;
+        background: #2da44e;
+        color: white;
+        padding: 0.4rem 0.7rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+      .download-button:hover {
+        background: #278a42;
+      }
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><%= (folder && folder.name) ? folder.name : 'Files' %></h1>
+      <div><a class="button" href="..">Back</a></div>
+    </header>
+
+    <div class="card">
+      <% function formatBytes(bytes) { if (!bytes) return '0 B'; const b =
+      Number(bytes); if (!isFinite(b)) return '-'; const units =
+      ['B','KB','MB','GB','TB']; const i = Math.floor(Math.log(b) /
+      Math.log(1024)); return (b / Math.pow(1024, i)).toFixed(i === 0 ? 0 : 2) +
+      ' ' + units[i]; } %> <% function formatDate(d) { try { const dt = new
+      Date(d); if (isNaN(dt.getTime())) return '-'; return dt.toLocaleString();
+      } catch { return '-'; } } %> <% if (files && files.length) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="muted">Size</th>
+            <th class="muted">Created</th>
+            <th class="muted">Updated</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% files.forEach(file => { %>
+          <tr>
+            <td><%= file.originalName %></td>
+            <td><%= file.mimeType || '-' %></td>
+            <td class="muted"><%= formatBytes(file.sizeBytes) %></td>
+            <td class="muted"><%= formatDate(file.createdAt) %></td>
+            <td class="muted"><%= formatDate(file.updatedAt) %></td>
+            <td>
+              <% if (file.id) { %>
+              <div class="actions">
+                <a class="download-button" href="/files/<%= file.id %>/download"
+                  >Download</a
+                >
+              </div>
+              <% } %>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <div class="empty">This folder is empty.</div>
+      <% } %>
+    </div>
+  </body>
+</html>

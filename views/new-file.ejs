@@ -73,18 +73,17 @@
   </head>
   <body>
     <main class="card">
-      <h1>Create a new folder</h1>
-      <form action="/folders/new" method="POST">
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter folder name"
-          required
-        />
-        <button type="submit">Create Folder</button>
+      <h1>Create a new file</h1>
+      <form
+        action="/users/<%= userId %>/folders/<%= folderId %>/files/new"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input type="file" name="file" placeholder="Enter file name" required />
+        <button type="submit">Create File</button>
       </form>
 
-      <a href="/users/<%= user.id %>/folders">Back to folders</a>
+      <a href="/users/<%= userId %>/folders">Back to folders</a>
     </main>
   </body>
 </html>
